@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University Website</title>
+    <link rel="stylesheet" href="/static/css/front.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
+    <title>Bus Information</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  
+  <title>FAQs</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
+  <style>
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: transparent;
+      min-width: 160px; /* Set your desired minimum width */
+      max-width: 300px; /* Set your desired maximum width */
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+  
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    
+    body {
+      background-color: #e4e4e4;
+      font-family: 'Helvetica', sans-serif;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      max-width: 800px;
+      box-shadow: 0 0 20px rgba(255, 0, 68, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .header {
+      background-color: #a0f081;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .faq-container {
+      padding: 20px;
+    }
+
+    .card {
+      border: 1px solid #2f0505;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 8px rgba(255, 6, 6, 0.825);
+    }
+
+    .card-header {
+      background-color: #010135;
+      color: #fff;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .btn-link {
+      color: #58a3f2;
+    }
+
+    .btn-link:hover {
+      text-decoration: none;
+    }
+
+    .collapse.show {
+      visibility: visible;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+    <section class="sub-header">
+      <nav>
+        <div class="nav-links" id="navLinks">
+          <i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i>
+          <ul>
+            <li><a href="{% url 'front' %}">HOME</a></li>
+            <li><a href="{% url 'about' %}">ABOUT</a></li>
+            <li class="dropdown">
+              <a href="{% url 'department' %}" class="dropbtn">DEPARTMENTS</a>
+              <div class="dropdown-content">
+                  <select id="departmentDropdown">
+                      <option value="" selected disabled>Select a department</option>
+                      {% for department in departments %}
+                          <option value="{{ department.dept_id }}">{{ department.dept_name }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+            </li>
+            <li><a href="{% url 'news_page' %}">NEWS</a></li>
+            <li><a href="{% url 'contact' %}">CONTACT</a></li>
+            <li><a href="{% url 'bus_list' %}">BUS INFO</a></li>
+            <li><a href="{% url 'faq_list' %}">FAQs</a></li>
+          </ul>
+        </div>
+        <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
+      </nav>
+      <h1>FAQs</h1>
+    </section>
+
+
+    <div class="container mt-5">
+  <div class="faq-container" id="faqAccordion">
+    {% for topic, faqs in faqs_by_topic.items %}
+      <div class="card">
+        <div class="card-header" data-toggle="collapse" data-target="#topicCollapse{{ topic.topic_id }}">
+          <h2 class="mb-0">
+            {{ topic.topic_name }}
+            <i class="fas fa-chevron-down float-right"></i>
+          </h2>
+        </div>
+
+        <div id="topicCollapse{{ topic.topic_id }}" class="collapse" data-parent="#faqAccordion">
+          <div class="card-body">
+            {% for faq in faqs %}
+              <div class="card">
+                <div class="card-header" data-toggle="collapse" data-target="#faqCollapse{{ faq.ques_id }}" aria-expanded="false" aria-controls="faqCollapse{{ faq.ques_id }}">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link">
+                      {{ faq.question }}
+                    </button>
+                    <i class="fas fa-chevron-down float-right"></i>
+                  </h2>
+                </div>
+
+                <div id="faqCollapse{{ faq.ques_id }}" class="collapse">
+                  <div class="card-body">
+                    {{ faq.answer }}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

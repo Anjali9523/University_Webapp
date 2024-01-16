@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University Website</title>
+    <link rel="stylesheet" href="/static/css/front.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />   
+    <title>University News</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #100404;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #7a7070;
+            margin-bottom: 20px;
+        }
+
+        .news-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .news-item {
+            flex: 1 0 30%;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .latest-news {
+            flex: 1 0 60%;
+            background-color: #f2f2f2;
+            border: 2px solid #888;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #08213b; /* Bootstrap's primary color */
+            border-color: #04274d;
+        }
+    </style>
+</head>
+<body>
+    <section class="sub-header-news">
+        <nav>
+          <div class="nav-links" id="navLinks">
+            <i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i>
+            <ul>
+              <li><a href="{% url 'front' %}">HOME</a></li>
+              <li><a href="{% url 'about' %}">ABOUT</a></li>
+              <li><a href="{% url 'news_page' %}">NEWS</a></li>
+              <li><a href="{% url 'contact' %}">CONTACT</a></li>
+              <li><a href="{% url 'bus_list' %}">BUS INFO</a></li>
+            </ul>
+          </div>
+          <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Explore the Latest University News</h1>
+      </section>
+    
+    
+    <div class="container news-container">
+        <div class="row">
+            <div class="col-md-6">
+                <form method="GET" action="{% url 'news_page' %}" class="mb-3">
+                    <div class="form-group">
+                        <label for="filterDate">Filter by Date:</label>
+                        <input type="date" class="form-control" id="filterDate" name="filter_date">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Apply Filter</button>
+                </form>
+            </div>
+        </div>
+        {% if all_news %}
+            <div class="card latest-news">
+                <div class="card-body">
+                    <h5 class="card-title">{{ all_news.0.news_title }}</h5>
+                    <a href="{{ all_news.0.news_link }}" class="btn btn-primary">Read more</a>
+                    <p class="card-text"><small class="text-muted">Date of Issue: {{ all_news.0.date_of_issue }}</small></p>
+                </div>
+            </div>
+            {% for news_item in all_news|slice:"1:" %}
+                <div class="card news-item">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ news_item.news_title }}</h5>
+                        <a href="{{ news_item.news_link }}" class="btn btn-primary">Read more</a>
+                        <p class="card-text"><small class="text-muted">Date of Issue: {{ news_item.date_of_issue }}</small></p>
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}
+            <div class="alert alert-warning alert-dismissible fade show animated fadeIn" role="alert">
+                <strong>No news available!</strong> Check back later for updates.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

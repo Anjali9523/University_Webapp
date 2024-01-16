@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University Website</title>
+    <link rel="stylesheet" href="/static/css/front.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>  
+    <style>
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: transparent;
+        min-width: 160px; /* Set your desired minimum width */
+        max-width: 300px; /* Set your desired maximum width */
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+  
+      .dropdown:hover .dropdown-content {
+          display: block;
+      }
+    </style> 
+    <body>
+    <section class="header">
+      <nav>
+        <a href="myapp/front.html"><img src="/static/images/pu_logo.png" alt="" /></a>
+        <div class="nav-links" id="navLinks">
+          <i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i>
+          <ul>
+            <li><a href="{% url 'front' %}">HOME</a></li>
+            <li><a href="{% url 'about' %}">ABOUT</a></li>
+            <li class="dropdown">
+              <a href="{% url 'department' %}" class="dropbtn">DEPARTMENTS</a>
+              <div class="dropdown-content">
+                  <select id="departmentDropdown">
+                      <option value="" selected disabled>Select a department</option>
+                      {% for department in departments %}
+                          <option value="{{ department.dept_id }}">{{ department.dept_name }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+            </li>
+            <li><a href="{% url 'news_page' %}">NEWS</a></li>
+            <li><a href="{% url 'contact' %}">CONTACT</a></li>
+            <li><a href="{% url 'bus_list' %}">BUS INFO</a></li>
+            <li><a href="{% url 'faq_list' %}">FAQs</a></li>
+          </ul>
+        </div>
+        <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
+      </nav>
+      <div class="text-box">
+        <h1 class="display-4"><strong>Welcome to Our University</strong></h1>
+        <p class="lead"><h3>Empowering Minds, Enriching Lives</h3></p>
+        <a href="{{ 'http://localhost:5500/' }}"  class="hero-btn">MAP of University</a>
+      </div>
+      <section class="chatbot-section">
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col-md-3">
+                    <div class="icon-circle">
+                        <a href="{{ 'http://localhost:8501/' }}" target="_blank" rel="noopener noreferrer">
+                            <img src="{% static 'images/image1_chat.png' %}" alt="Chatbot Icon" class="img-fluid rounded-circle" style="width: 50px; height: 50px; border-radius: 50%;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    </section>
+    
+
+    <section class="course">
+      <h1>Courses We Offer</h1>
+      <p>Here are some courses shown we offer and many more....!✌</p>
+      <div class="row">
+        <div class="course-col">
+          <h3>Science</h3>
+          <p>The institution offers a diverse range of science courses, including Doctor of Philosophy (Ph.D.), Master of Philosophy (M.Phil.), Master of Science (M.Sc), Master of Computer Applications (M.C.A), and specialized programs such as M.Sc Medical Biochemistry, M.Sc bio-technology, and M.Tech. (Atmospheric Physics). These programs cover various disciplines such as Computer Science, Electronics, Bio-Informatics, Communication Studies, Material Science, and more, with specific entrance qualifications and durations tailored to each course.
+          </p>
+        </div>
+        <div class="course-col">
+          <h3>Commerce</h3>
+          <p>The Faculty of Commerce offers a diverse array of courses, including doctoral and master's programs such as Ph.D. and M.Phil., as well as undergraduate degrees like B.Com., along with specialized postgraduate diplomas in areas such as company secretaryship, salesmanship, advertisement, statistics, taxation, banking, accountancy, and international business. Additionally, a certificate course in E-commerce is available for students completing their T.Y.B.Com.
+          </p>
+        </div>
+        <div class="course-col">
+          <h3>Management</h3>
+          <p>The Faculty of Management offers diverse programs, including Ph.D., M.B.A., M.P.M., M.C.M., M.M.S., and M.M.M. Admission to M.B.A. requires a graduate degree with 50% marks (45% for reserved categories) and a selection process. Undergraduate options include B.H.M.C.T., and diploma courses cover Business Management, Computer Management, Marketing Management, Print Administration, Co-operative Management, Hospital Management, Office Management, Capital Marketing Management, Financial Services, and Environment. Part-time offerings like Advanced Diploma in Computer Application (A.D.C.A.) cater to graduates meeting specific criteria.
+          </p>
+        </div>
+      </div>
+    </section>
+<!-- campus -->
+    <section class="campus">
+      <h1>Our Campus</h1>
+      <p>Explore the heart of our academic community, where innovation meets inspiration, and students thrive in a vibrant and inclusive campus environment.</p>
+      <div class="row">
+        <div class="campus-col">
+          <img src="/static/images/university.jpg" alt="">
+          <div class="layer">
+            <h3>😍</h3>
+          </div>
+        </div>
+        <div class="campus-col">
+          <img src="/static/images/university2.webp" alt="">
+          <div class="layer">
+            <h3>🤳</h3>
+          </div>
+        </div>
+        <div class="campus-col">
+          <img src="/static/images/university4.jpg" alt="">
+          <div class="layer">
+            <h3>👏</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="facilities">
+      <h1>Our Facilities</h1>
+      <p>At our university, top-notch facilities provide a foundation for success, offering cutting-edge resources and spaces designed to nurture talent, research, and a vibrant campus life.</p>
+      <div class="row">
+        <div class="facilities-col">
+          <img src="/static/images/library.png" alt="">
+          <h3>Jayakar knowledge Resource Centre</h3>
+          <p>Jayakar Knowledge Resource Centre (formerly Jayakar Library) is central library of Savitribai Phule Pune University. It was established in January 1950, and is  named in honor of the first Vice-Chancellor of the university Dr. M. R. Jayakar
+            Participates in E-ShodhSindhu program. Under this program access to more than 8000 journals are provided.
+            It  is a part of Universal Digital Library program since 2002.
+            Implementated  RFID technology in the library along with smart cards to faculty and students.
+            Has internet center for students of the University.</p>
+        </div>
+        <div class="facilities-col">
+          <img src="/static/images/basketball.png" alt="">
+          <h3>Sports & Physical education</h3>
+          <p><b>Dr. Deepak Mane</b>,
+            Director,
+            Board of Sports & Physical Education<br>
+            The University Board of Sports & Physical Education came into existence in the year 1949. The objective of the Board of Sports & physical Education is to take necessary steps for promotion of sports culture and activities in the field of sports in colleges and university departments and also to establish links with regional and national bodies in the various sports and to promote various activities jointly with them in colleges, recognized institutions and university departments as per the policy of the university.</p>
+        </div>
+        <div class="facilities-col">
+          <img src="/static/images/cafeteria.png" alt="">
+          <h3>Food Court</h3>
+          <p>The university's food court is a bustling hub where students can indulge in a variety of culinary delights, offering a diverse menu to cater to different tastes. With its modern ambiance and comfortable seating, the food court serves as a social gathering space for students to relax and enjoy delicious meals between classes. From quick bites to wholesome meals, the food court provides a range of options, making it a convenient and essential part of campus life. It not only satisfies hunger but also fosters a sense of community as students come together to share meals and create lasting memories in this lively setting.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="testimonials">
+      <h1>What Our Student Says</h1>
+      <p>Our university is a vibrant community where learning goes beyond textbooks, and every day brings new opportunities for growth and exploration.</p>
+      <div class="row">
+        <div class="testimonial-col">
+          <img src="/static/images/user1.jpg" alt="">
+          <div>
+            <p>
+              Pune is a very vibrant city. The weather here is also good. The International Students center is great with great people.
+              
+              The 'family' of international students here is great. Puneites are very friendly.</p>
+          <h3>Stacey Astrio Supersad</h3>
+          <h6>Trinidad & Tobago
+            Fergusson College, B.Sc., Computer science</h6>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <div class="testimonial-col">
+          <img src="/static/images/user2.jpg" alt="">
+          <div>
+            <p>Weather in Pune city is very nice, allowing students to study hard all year round.
+ 
+              Since Pune is a educational Hub of India as well as South Asia, there are many 'cultural ambassadors' in the form of students from more than 40 countries who study here.
+              
+              According to my experience, University of Pune has abundant knowledge faculties.</p>
+          <h3>Pakpong Wudthiwongse,<h3></h3><h6>Thailand, Ph.D.</h6>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-regular fa-star"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="cta">
+      <h1>Take a Virtual Tour of Our Campus</h1>
+      <a href="#" class="hero-btn">EXPLORE CAMPUS</a>
+    </section>
+    
+    
+
+
+    <section class="footer">
+      <h4>About Us</h4>
+      <p>Savitribai Phule Pune University is one of the finest and most popular educational centers in the city. It offers excellent programs in various areas including Science, Commerce, Arts, Languages and Management Studies.</p>
+      <div class="icons">
+        <i class="fa-brands fa-facebook"></i>
+        <i class="fa-brands fa-twitter"></i>
+        <i class="fa-brands fa-instagram"></i>
+        <i class="fa-brands fa-linkedin"></i>
+      </div>
+    </section>
+    <script>
+      document.getElementById('departmentDropdown').addEventListener('change', function () {
+          var selectedDepartment = this.value;
+          if (selectedDepartment) {
+              var url = '{% url "department_view" department_id=501 %}'.replace('501', selectedDepartment);
+              window.location.href = url;
+          }
+      });
+    </script>
+    <script src="/static/js/script.js"></script>
+  </body>
+</html>

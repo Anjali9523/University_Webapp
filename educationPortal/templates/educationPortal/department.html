@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home</title>
+<link rel="stylesheet" href="{% static 'educationPortal/department.css' %}" >
+</head>
+<body>
+
+<div class="containerhead">
+    <img src="{% static 'educationPortal/images/logo.jpeg' %}" alt="Description">
+</div>
+
+<nav>
+  <div class="container"> 
+      <a href="{% url 'department' %}">Home</a> 
+      <a href="{% url 'academics' %}">Academic</a> 
+      <a href="{% url 'research' %}">Research</a> 
+      <a href="{% url 'faculty' %}">Faculty</a> 
+      <a href="{% url 'admission' %}">Admission</a> 
+      <a href="{% url 'syllabus' %}">Syallabus</a>  
+      <a href="{% url 'cellmember' %}">Cell Members</a>
+      <a href="{% url 'contact_view' %}">Contact Information</a>
+      <a href="{% url 'index' %}">Login</a> 
+  </div>
+</nav>
+
+<div class="slider"><img src="{% static 'educationPortal/images/department.jpeg' %}"></div>
+
+<div class="container">
+  <div class="main-section">
+
+    
+    <h>
+      The Department is one of the earliest CS Departments started in Indian Universities. Back in <b>1980</b>, when computer science was little known and the word IT didn't exist, a one-year programme was started towards the B.Sc. (Applied) degree in Computer Science. The M.C.A. programme was launched in 1983, the M.Tech. degree programme in 1985, and the one year B.Sc. (Applied) programme was upgraded to a two year M.Sc. in Computer Science in 1986.
+
+<b>The Pune University, Computer Science Department (PUCSD)</b> Savitribai Phule Pune University is a teaching department that aims at providing quality education in Computer Science. As with any education institution, students give the department a dynamic character and an active culture towards Computer Science, guided by their faculty. Apart from teaching postgraduate level Computer Science, the faculty is also involved in research, consultancy and development programs. The support structure of the department provides all the required non-academic support to the students and the faculty.
+
+Details of most of our activities can be found on this site.<b> PUCSD </b>takes care to ensure that the basic scientific principles of Computer Science are presented to the student and actively tries to point out the differences between the Computation as a science and software. Our mission statement elucidates this point further. Another characteristic academic experience at <b>PUCSD</b> for the student is the almost lack of any divide between Computer Science theory and practice. We try our best to maintain a 24x7 availability of our resources.
+    </h>
+  </div>
+
+<div class="main-section about-us">
+    <img src="{% static 'educationPortal/images/hod.png' %}" >
+    <div>
+       <h2 class="heading">HOD Message</h2>
+       <p> Today we find that information technology has become overwhelmingly pervasive, 
+        while its parent, computing science, has become correspondingly hard to find. 
+        While many CS educational institutions have shifted focus from core CS and become 
+        specialty providers for the IT industry, or else please permit me to say these mass producers 
+        of vocationally trained personnel, a few institutions continue to emphasis the pristine science
+        underlying the diverse aspects of computing. This is the single most important attribute of the
+        education offered here. Our department has remained true to the vision on which it was founded.</p>
+    </div>  
+</div>
+ 
+<div class="main-section">
+ <h2 class="heading">What Student Say's About Courses</h2>
+ <marquee scrollamount="7">
+    <div class="testimonial">
+      <div class="testimonial-text"> Contrary to popular belief, Lorem Ipsum is not simply <br>
+        It has roots in a piece of classical Latin literature <br>
+        from 45 BC, making it over 2000 years old. Richard ,<br>
+        a Latin professor at Hampden-Sydney College in look. </div>
+      <div class="testimonial-detail">
+        <div class="testimonial-img"> <img src="{% static 'educationPortal/images/testimonial-1.jpg' %}"> </div>
+        <div class="testimonial-name">
+          <h5>Niccky</h5>
+          <p>Web Devloper</p>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="testimonial-text"> Contrary to popular belief, Lorem Ipsum is not simply <br>
+        It has roots in a piece of classical Latin literature <br>
+        from 45 BC, making it over 2000 years old.  McClintock,<br>
+        a Latin professor at Hampden-Sydney College in look. </div>
+      <div class="testimonial-detail">
+        <div class="testimonial-img"> <img src="{% static 'educationPortal/images/testimonial-2.jpg' %}"> </div>
+        <div class="testimonial-name">
+          <h5>Richa</h5>
+          <p>Web Devloper</p>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="testimonial-text"> Contrary to popular belief, Lorem Ipsum is not simply <br>
+        It has roots in a piece of classical Latin literature <br>
+        from 45 BC, making it over 2000 years old.  McClintock,<br>
+        a Latin professor at Hampden-Sydney College in  look. </div>
+      <div class="testimonial-detail">
+        <div class="testimonial-img"> <img src="{% static 'educationPortal/images/testimonial-3.jpg' %}"> </div>
+        <div class="testimonial-name">
+          <h5>Jiya</h5>
+          <p>Web Devloper</p>
+        </div>
+      </div>
+    </div>
+ </marquee>
+</div>
+<div class="main-section gallery">
+    <h2 class="heading">Gallery</h2>
+    <img src="{% static 'educationPortal/images/gallery-1.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/gallery-2.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/gallery-3.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/gallery-4.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/gallery-5.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/gallery-6.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/gallery-7.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/gallery-8.jpg' %}"> 
+</div>
+  
+<div class="main-section">
+    <h2 class="heading">Placement</h2>
+    <marquee class="placement" direction="left" scrollamount="10">
+    <img src="{% static 'educationPortal/images/company-1.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/company-2.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/company-3.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/company-4.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/company-5.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/company-6.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/company-7.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/company-8.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/company-9.jpg' %}"> 
+    <img src="{% static 'educationPortal/images/company-10.jpg' %}">  
+    <img src="{% static 'educationPortal/images/company-12.jpg' %}">
+    </marquee>
+</div>
+</div>
+
+<div class="footer">
+  <div class="container">
+    <div class="footer-sect">
+      <h2>Best Institute For Education</h2>
+      <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock.</p>
+      <img src="images/icon-fb.png"> 
+      <img src="images/icon-tw.png"> 
+      <img src="images/icon-in.png"> 
+      <img src="images/icon-li.png"> 
+    </div>
+    <div class="footer-sect">
+      <h2>Quick Links</h2>
+      <ul class="footer-menu">
+        <li><a href="#"> > Home</a></li>
+        <li><a href="#"> > About us</a></li>
+        <li><a href="#"> > Tutorial</a></li>
+        <li><a href="#"> > Event</a></li>
+        <li><a href="#"> > Gallery</a></li>
+        <li><a href="#"> > Press Release</a></li>
+        <li><a href="#"> > Courses</a></li>
+        <li><a href="#"> > Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-sect">
+      <h2>Contact Info</h2>
+      <ul class="footer-contact">
+        <li><b>Email :</b> reply@bestinstituteeducation.com </li>
+        <li><b>Call :</b> +91 -123 456 7890 </li>
+        <li><b>Fax :</b> +91 -123 4567890 </li>
+        <li><b>Website :</b> https://www.dezven.com </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</body>
+</html>

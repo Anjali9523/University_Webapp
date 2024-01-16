@@ -1,0 +1,202 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}Assignments{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="{% static 'educationPortal/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'educationPortal/ClassView.css' %}" rel="stylesheet">
+    <link href="{% static 'educationPortal/conversations.css' %}" rel="stylesheet">
+    <link href="{% static 'educationPortal/addNotes.css' %}" rel="stylesheet">
+    <link href="{% static 'educationPortal/viewNotes.css' %}" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/869e8d43b7.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <header class="mainHeader">
+        <div style="display: flex; align-items: center;">
+            <div id="menuBars">
+                <i class="fas fa-bars menuBars"></i>
+            </div>
+                        <img src="{% static 'educationPortal/Icons/Logo.svg' %}" style="height: 7vh; margin-right: 20px; color: orange; margin-left: 20px;"
+                            class="logo">
+
+            <h4 class="title">SPPU</h4>
+        </div>
+        <div class="headerItems">
+
+            <button class="profileButton" onclick="profilePopUp()">
+                {% if user.profile_pic %}
+                <img src="{{user.profile_pic.url}}" width="40px" height="40px" style="border-radius: 50%;">
+                {% else %}
+                <img src="/images/blankUserIcon.svg" width="40px" height="40px" style="border-radius: 50%;">
+                {% endif %}
+                <p class="profileButtonText">{{user.first_name}}</p>
+            </button>
+            <div class="profilePopUp" id="profilePopUp">
+
+                {% if user.profile_pic %}
+                <img src="{{user.profile_pic.url}}" class="profilePic">
+                {% else %}
+                <img src="/images/blankUserIcon.svg" class="profilePic">
+                {% endif %}
+
+                <button onclick="editPic()" class="editButton">
+                    <i class="fas fa-edit" style="margin-left: 2px; margin-bottom: 1px;"></i>
+                </button>
+
+                <form class="editProfile" id="imageEdit" hidden action="{% url 'editProfileImage' %}" method="POST"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                        <input type="file" id="img" name="img" accept="image/*">
+                        <input type="submit" class="submitBtn">
+                    </div>
+
+                </form>
+
+
+                <h5 style="font-weight: 400; padding-top: 20px;">{{user.first_name}} {{user.last_name}}</h5>
+
+
+                {% if user.is_authenticated %}
+
+                <a class="nav-link" href="{% url 'logout' %}">
+                    <button class="logOutButton">Log Out</button>
+                </a>
+                {% else %}
+                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                <a class="nav-link" href="{% url 'register' %}">Register</a>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </header>
+
+    <div class="sideMenu" id="sideMenu">
+
+        {% if user.profile_pic %}
+            <img src="{{user.profile_pic.url}}" width="45px" height="40px" style="border-radius: 50%;">
+        {% else %}
+            <img src="/images/blankUserIcon.svg" width="45px" height="40px" style="border-radius: 50%;">
+        {% endif %}
+        <span style="color: #f8f8f8; font-size: 20px ">{{user.first_name}} {{user.last_name}}</span> 
+
+        <a href="{% url 'index' %}" class="sideMenuLink" style="border-top: 1px solid rgb(70, 86, 189)">
+            <button>Home</button>
+        </a>
+        <a href="{% url 'ViewClassroom' class.code %}" class="sideMenuLink">
+            <button>Announcements</button>
+        </a>
+        <a href="{% url 'assignments' class.code %}" class="sideMenuLink">
+            <button> Assignments </button>
+        </a>
+        <a href="{% url 'quizzes' class.code %}" class="sideMenuLink">
+            <button> Quizzes </button>
+        </a>
+        <a href="{% url 'conversations'%}" class="sideMenuLink">
+            <button> Conversations </button>
+        </a>
+        {% if user.userType == "Student" %}
+        <a href="{% url 'addNotes' class.code%}" class="sideMenuLink">
+            <button> Add Notes </button>
+        </a>
+        {% endif %}
+    </div>
+    
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="AssignmentInfo">
+                    <table>
+                        <tr>
+                            <td>
+                                <i class="far fa-file-alt {{class.theme}}"
+                                    style="color: white; font-size: x-large; transform: scale(1.2); padding: 10px; padding-left: 13px; padding-right: 13px; border-radius: 50%;"></i>
+                            </td>
+                            <td>
+                                <h2 style="color: rgb(72, 72, 72); font-weight: 500; padding-left: 20px; padding-top: 5px;">
+                                   Title:-  <span style="color: #FF0000; font-size: 30px ">{{notes.title}}</span> </h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+            
+                            </td>
+                            <td>
+                                <div style="padding-left: 20px; padding-top: 2vh; font-size: smaller; margin:0px">
+                                    {{notes.date}}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+            
+                            </td>
+                            <td>
+                                <div style="color: rgb(72, 72, 72); font-weight: 500; padding-left: 20px; padding-top: 5px; font-size: 25px ; margin:0px">
+                                    Description:-  <span style="color: #FF0000; font-size: 20px ">{{notes.description | safe}}</span>
+                                </div>
+                                <hr style="width: 100%; margin: 0px;  margin-left: 20px;">
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    <br>
+                    <h6 style="color: rgb(66, 66, 66);">Attachment Files:</h6>
+                    <div style="display: flex; flex-direction: column; max-height: 30vh; overflow-y: auto; width: 100%; overflow-x: hidden;">
+                        {% for file in notes.givenFiles.all %}
+                            
+                        <a href="{{file.file.url}}" download style="text-decoration: none; color: rgb(88, 88, 88); background-color: rgb(233, 233, 233);" class="fileLink">
+                            <div>
+                                <i class="fas fa-file" style="color: gray; padding-right:10px; padding-top: 15px;"></i>
+                                <div>{{file.name}}</div>
+                            </div>
+                        </a>
+                            
+                        {% endfor %}
+                    </div>
+                    {% if notes.givenFiles.count > 0 %}
+                    <button class="submitBtn" onclick="downloadAll()"> Download All Files </button>
+                    {% endif %}
+        
+                    <br>
+                    <br>       
+                </div>
+                
+                <h3 style="padding-left: 5vw; padding-top: 6vh; margin-bottom: 0; padding-bottom: 0;">Submitted by:  
+                    {% if user.profile_pic %}
+                        <img src="{{notes.profile_pic.url}}" width="50px" height="40px" style="border-radius: 50%;">
+                    {% else %}
+                        <img src="/images/blankUserIcon.svg" width="50px" height="40px" style="border-radius: 50%;">
+                    {% endif %}
+                    <span style="color: #FF0000; font-size: 20px ">{{user.first_name}} {{user.last_name}} ({{user.username}})</span> 
+                </h3>
+                
+            </div>
+           
+        </div>
+        
+
+        
+        
+
+    </div>
+
+    <script src="{% static 'educationPortal/Classroom.js' %}"></script>
+    <script src="{% static 'educationPortal/index.js' %}"></script>
+    <script src="{% static 'educationPortal/viewNotes.js' %}"></script>
+
+</body>
+
+</html>

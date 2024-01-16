@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University Website</title>
+    <link rel="stylesheet" href="/static/css/front.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
+    <title>Bus Information</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <style>
+        body {
+            background-image: url('static/images/login.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .interactive-heading {
+            background: linear-gradient(45deg, #373f48, #6c757d);
+            color: #13c8b6;
+            padding: 15px;
+            border-radius: 10px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .interactive-heading:hover {
+            background: linear-gradient(45deg, #0056b3, #495057);
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        .card {
+            border: 1px solid #3f0202;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(251, 77, 77, 0.2);
+        }
+
+        .btn-primary {
+            background-color: #08213b; /*primary color */
+            border-color: #63707d;
+        }
+
+        
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: transparent;
+          min-width: 160px; /* Set your desired minimum width */
+          max-width: 300px; /* Set your desired maximum width */
+          box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+          z-index: 1;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+    </style>
+</head>
+<body>
+    <section class="sub-header-bus">
+        <nav>
+          <div class="nav-links" id="navLinks">
+            <i class="fa-solid fa fa-xmark" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="{% url 'front' %}">HOME</a></li>
+                <li><a href="{% url 'about' %}">ABOUT</a></li>
+                <li class="dropdown">
+                  <a href="{% url 'department' %}" class="dropbtn">DEPARTMENTS</a>
+                  <div class="dropdown-content">
+                      <select id="departmentDropdown">
+                          <option value="" selected disabled>Select a department</option>
+                          {% for department in departments %}
+                              <option value="{{ department.dept_id }}">{{ department.dept_name }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                </li>
+                <li><a href="{% url 'news_page' %}">NEWS</a></li>
+                <li><a href="{% url 'contact' %}">CONTACT</a></li>
+                <li><a href="{% url 'bus_list' %}">BUS INFO</a></li>
+                <li><a href="{% url 'faq_list' %}">FAQs</a></li>
+              </ul>
+          </div>
+          <i class="fa-solid fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Explore Bus Routes</h1>
+      </section>
+
+<div class="container mt-5">
+<form method="GET" action="{% url 'bus_list' %}" class="mb-4" id="busFilterForm">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="filter_option" id="filterSourceDest" value="source_dest" checked>
+        <label class="form-check-label" for="filterSourceDest">Filter by Source and Destination</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="filter_option" id="filterBusNo" value="bus_no">
+        <label class="form-check-label" for="filterBusNo">Filter by Bus Number</label>
+    </div>
+
+    <div class="form-row">
+        <div class="col-md-6 mb-2" id="sourceDestFilters">
+            <div class="input-group">
+                <select class="form-control" name="source" id="sourceSelect" placeholder="Source">
+                    <option value="" selected disabled>Select Source</option>
+                    {% for source in sources %}
+                        <option value="{{ source }}">{{ source }}</option>
+                    {% endfor %}
+                </select>
+                <select class="form-control" name="destination" id="destinationSelect" placeholder="Destination">
+                    <option value="" selected disabled>Select Destination</option>
+                    {% for destination in destinations %}
+                        <option value="{{ destination }}">{{ destination }}</option>
+                    {% endfor %}
+                </select>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-2" id="busNoFilter" style="display: none;">
+            <div class="input-group">
+                <select class="form-control" name="bus_no" id="busNoSelect" placeholder="Bus Number">
+                    <option value="" selected disabled>Select Bus Number</option>
+                    {% for bus_no in bus_numbers %}
+                        <option value="{{ bus_no }}">{{ bus_no }}</option>
+                    {% endfor %}
+                </select>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-2" id="stopsFilter" style="display: none;">
+            <div class="input-group">
+                <select class="form-control" name="stop_source" id="stopSourceSelect" placeholder="Stop Source">
+                    <option value="" selected disabled>Select Stop Source</option>
+                    {% for stop in stops %}
+                        <option value="{{ stop.stop_name }}">{{ stop.stop_name }}</option>
+                    {% endfor %}
+                </select>
+                <select class="form-control" name="stop_destination" id="stopDestinationSelect" placeholder="Stop Destination">
+                    <option value="" selected disabled>Select Stop Destination</option>
+                    {% for stop in stops %}
+                        <option value="{{ stop.stop_name }}">{{ stop.stop_name }}</option>
+                    {% endfor %}
+                </select>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="filter_option" id="filterAll" value="all_bus">
+        <label class="form-check-label" for="filterAll">All</label>
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+        </div>
+    </div>
+    </div>
+
+    
+</form>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var filterOptionRadios = document.getElementsByName('filter_option');
+        var sourceDestFilters = document.getElementById('sourceDestFilters');
+        var busNoFilter = document.getElementById('busNoFilter');
+
+        function toggleFiltersVisibility() {
+            sourceDestFilters.style.display = filterOptionRadios[0].checked ? 'block' : 'none';
+            busNoFilter.style.display = filterOptionRadios[1].checked ? 'block' : 'none';
+        }
+
+        toggleFiltersVisibility();
+
+        for (var i = 0; i < filterOptionRadios.length; i++) {
+            filterOptionRadios[i].addEventListener('change', toggleFiltersVisibility);
+        }
+    });
+</script>
+
+
+<div class="row">
+    {% if buses %}
+        {% for bus in buses %}
+        <div class="col-md-6 mb-4 animate__animated animate__fadeInUp">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Bus No: {{ bus.bus_no }}</h5>
+                        <p class="card-text">
+                            <strong>Route:</strong> {{ bus.route.route_no }}<br>
+                            <strong>Source:</strong> {{ bus.route.source }}<br>
+                            <strong>Destination:</strong> {{ bus.route.destination }}<br>
+                        </p>
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#detailsModal{{ bus.route.route_no }}">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="detailsModal{{ bus.route.route_no }}" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailsModalLabel">Details for Route {{ bus.route.route_no }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                <strong>Source:</strong> {{ bus.route.source }} <br>
+                                <strong>Destination:</strong> {{ bus.route.destination }}<br>
+                            </p>
+                            <p>Stops:</p>
+                            <ul>
+                                {% for stop in bus.route.stops.all %}
+                                    <li>{{ stop.stop_name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-md-12 mb-4">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>No buses found!</strong> Please adjust your filters or try again later.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
