@@ -6,5 +6,3 @@ start the server for map by running :- node server.js
 To run Django Files:- python manage.py makemigrations
                       python manage.py migrate
                       python manage.py runserver
-
-ye dekho to tik hai etns readme file me dalne ke liye
